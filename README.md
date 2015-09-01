@@ -1,6 +1,13 @@
-# docker-libreoffie-duden
+# docker-libreoffice-duden
 
 Docker image to get the old and rotten Duden-Rechtschreibprüfung V9 software running.
+
+The build instructions are tracked on [GitHub][this.project_github_url].
+
+The image is manually pushed to [Docker Hub][this.project_docker_hub_url] (Digest: sha256:cc6cc7bf94031e88e46a27543114d9d4c46f13e40e79912917177c6fbc8f3501).
+
+[this.project_docker_hub_url]: https://hub.docker.com/r/ypid/libreoffice_duden/
+[this.project_github_url]: https://github.com/ypid/docker-libreoffice-duden
 
 There was a time when [Duden](http://www.duden.de) sold a offline version of there quite advanced and powerful spell checking software for 19.95 € or something like that.
 
@@ -12,11 +19,25 @@ The spell checking is implemented as OpenOffice/LibreOffice extension. So far so
 
 It uses a self build Debian Wheezy i386 Docker base image and prepares it for the use with the Duden extension. On the first start the extension is installed.
 
+Not needed when pulled from Docker Hub.
+
 ## Building the base image
 
 Checkout my [docker-makefile](https://github.com/ypid/docker-makefile) repository and `make build-debian-wheezy-i368-base-image`.
 
-## Installing the extension
+## Building the image
+
+```Shell
+make build
+```
+
+or
+
+```Shell
+docker pull ypid/libreoffice_duden
+```
+
+## Installing the extension and running it
 
 ```Shell
 make run
@@ -26,6 +47,9 @@ You might need to change the owner of the bind mounted directory `mount_volume_u
 
 ```Shell
 ## In the container
+unopkg add duden_setup_files/die-duden-rechtschreibpruefung.oxt
+## You only get a: ERROR: You need write permissions to install this extension!
+## Does not work with the first try (as said, this software is old …)
 unopkg add duden_setup_files/die-duden-rechtschreibpruefung.oxt
 unopkg list
 ```
@@ -40,6 +64,12 @@ After that you should see something like this:
       is registered: yes
       Media-Type: application/vnd.sun.star.package-bundle
       Description: Mit dem Duden erkennen Sie jeden Fehler. Und Ihr PC auch.
+
+Now you should be able to start LibreOffice with the Duden spell checking extension enabled and German language preselected.
+
+```Shell
+libreoffice
+```
 
 ## License
 

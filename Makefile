@@ -21,9 +21,10 @@ libreoffice_duden:
 	docker run --tty --interactive \
 		--name "$@" \
 		$(DOCKER_RUN_OPTIONS) \
-		--volume $(duden_setup_file_directory):/home/user/duden_setup_files:ro \
+		--env "DISPLAY=unix$$DISPLAY" \
 		--volume /tmp/.X11-unix:/tmp/.X11-unix \
+		--volume $(duden_setup_file_directory):/home/user/duden_setup_files:ro \
 		--volume $(mount_volume_user_home):/home/user \
 		--net=none \
-		--env "DISPLAY=unix$$DISPLAY" \
 		$(image_libreoffice_duden)
+		# --user=root \
