@@ -17,7 +17,7 @@ The spell checking is implemented as OpenOffice/LibreOffice extension. So far so
 
 ## How it works
 
-It uses a self build Debian Wheezy i386 Docker base image and prepares it for the use with the Duden extension. On the first start the extension is installed.
+It uses a self build Debian Wheezy i386 Docker base image and prepares it for the use with the Duden extension. On the first start the extension is installed (which is not included in this image).
 
 ## Building the base image
 
@@ -44,6 +44,8 @@ make install
 ```
 
 You might need to change the owner of the bind mounted directory `mount_volume_user_home` from your host system to match your user. Note that the UID must match with the user in the inside which is 1000.
+
+The Makefile expects that you saved the extension extracted from zip file under `~/Downloads/Software/` which is mounted in the container as `~/duden_setup_files`.
 
 ```Shell
 ## In the container
