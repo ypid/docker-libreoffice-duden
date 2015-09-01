@@ -1,5 +1,7 @@
 ## For more examples of a Makefile based Docker container deployment see: https://github.com/ypid/docker-makefile
 
+DOCKER_RUN_OPTIONS ?= --env "TZ=Europe/Berlin"
+
 duden_setup_file_directory ?= $(HOME)/Downloads/Software
 mount_volume_user_home     ?= $(HOME)/.local/share/libreoffice_duden_user_home
 
@@ -41,3 +43,13 @@ run:
 		--net=none \
 		$(image_libreoffice_duden) \
 		libreoffice
+
+## Not working?? `make run is executed but Docker fails?
+desktop-entry:
+	@(echo "[Desktop Entry]"; \
+	echo "Encoding=UTF-8"; \
+	echo "Version=1.0"; \
+	echo "Type=Application"; \
+	echo "NoDisplay=false"; \
+	echo "Exec=sh -c 'cd $(PWD) && make run >> /tmp/.duden-libreoffice.log'"; \
+	echo "Name=Duden LibreOffice (Docker)") > "$(HOME)/.local/share/applications/userapp-duden-libreoffice.desktop"
