@@ -19,11 +19,11 @@ The spell checking is implemented as OpenOffice/LibreOffice extension. So far so
 
 It uses a self build Debian Wheezy i386 Docker base image and prepares it for the use with the Duden extension. On the first start the extension is installed.
 
-Not needed when pulled from Docker Hub.
-
 ## Building the base image
 
 Checkout my [docker-makefile](https://github.com/ypid/docker-makefile) repository and `make build-debian-wheezy-i368-base-image`.
+
+Not needed when pulled from Docker Hub.
 
 ## Building the image
 
@@ -40,7 +40,7 @@ docker pull ypid/libreoffice_duden
 ## Installing the extension and running it
 
 ```Shell
-make run
+make install
 ```
 
 You might need to change the owner of the bind mounted directory `mount_volume_user_home` from your host system to match your user. Note that the UID must match with the user in the inside which is 1000.
@@ -66,9 +66,10 @@ After that you should see something like this:
       Description: Mit dem Duden erkennen Sie jeden Fehler. Und Ihr PC auch.
 
 Now you should be able to start LibreOffice with the Duden spell checking extension enabled and German language preselected.
+For that just exit out of the container and execute:
 
 ```Shell
-libreoffice
+make run
 ```
 
 ## License
