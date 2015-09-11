@@ -9,8 +9,10 @@ image_libreoffice_duden ?= ypid/libreoffice_duden
 
 libreoffice_duden_container_name ?= libreoffice_duden
 
-default:
-	echo 'See Makefile'
+.PHONY: default build build-dev install run desktop-entry
+
+
+default: run
 
 build:
 	docker build --no-cache=true --tag $(image_libreoffice_duden) .
