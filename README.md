@@ -25,7 +25,7 @@ Checkout my [docker-makefile](https://github.com/ypid/docker-makefile) repositor
 
 Not needed when pulled from Docker Hub.
 
-## Building the image
+## Getting the image
 
 ```Shell
 make build
@@ -43,7 +43,7 @@ docker pull ypid/libreoffice_duden
 make install
 ```
 
-You might need to change the owner of the bind mounted directory `mount_volume_user_home` from your host system to match your user. Note that the UID must match with the user in the inside which is 1000.
+You might need to change the owner of the bind mounted directory `mount_volume_user_home` from your host system to match your user. Note that the UID must match with the user inside which is 1000.
 
 The Makefile expects that you saved the extension extracted from zip file under `~/Downloads/Software/` which is mounted in the container as `~/duden_setup_files`.
 
