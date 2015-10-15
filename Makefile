@@ -9,10 +9,10 @@ image_libreoffice_duden ?= ypid/libreoffice_duden
 
 libreoffice_duden_container_name ?= libreoffice_duden
 
-.PHONY: default build build-dev install run desktop-entry
+.PHONY: default build build-dev install run start desktop-entry
 
 
-default: run
+default: start
 
 build:
 	docker build --no-cache=true --tag $(image_libreoffice_duden) .
@@ -26,7 +26,7 @@ install:
 		--name "$(libreoffice_duden_container_name)" \
 		$(DOCKER_RUN_OPTIONS) \
 		--env "DISPLAY=unix$$DISPLAY" \
-		--volume /tmp/.X11-unix:/tmp/.X11-unix \
+		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
 		--volume $(duden_setup_file_directory):/home/user/duden_setup_files:ro \
 		--volume $(mount_volume_user_home):/home/user \
 		--net=none \
@@ -46,12 +46,14 @@ run:
 		$(image_libreoffice_duden) \
 		libreoffice
 
-## Not working?? `make run is executed but Docker fails?
+start:
+	docker start "$(libreoffice_duden_container_name)"
+
 desktop-entry:
 	@(echo "[Desktop Entry]"; \
 	echo "Encoding=UTF-8"; \
 	echo "Version=1.0"; \
 	echo "Type=Application"; \
 	echo "NoDisplay=false"; \
-	echo "Exec=sh -c 'cd $(PWD) && make run >> /tmp/.duden-libreoffice.log'"; \
+	echo "Exec=sh -c 'cd $(PWD) && make start >> /tmp/.duden-libreoffice.log'"; \
 	echo "Name=Duden LibreOffice (Docker)") > "$(HOME)/.local/share/applications/userapp-duden-libreoffice.desktop"

@@ -11,9 +11,12 @@ The image is manually pushed to [Docker Hub][this.project_docker_hub_url] (Diges
 
 There was a time when [Duden](http://www.duden.de) sold a offline version of there quite advanced and powerful spell checking software for 19.95 € or something like that.
 
-Currently it seems that they only provide an limited online version: http://www.duden.de/rechtschreibpruefung-online/
+Currently it seems that they only provide a limited\* online version: http://www.duden.de/rechtschreibpruefung-online/
 
-The spell checking is implemented as OpenOffice/LibreOffice extension. So far so good. The problem is that this extension is only compatible with LibreOffice < 4 and if that was not enough it only works on i386 platforms. Thats why this Docker has been created to easily use this old but still useful software.
+\* The limitation is that you can only check 800 characters at a time. So for normal documents you would have to split your text or write a script which does this for you.
+The other limitation is currently that this online tool is only reachable via HTTP. HTTPS answers with 302 Moved Temporarily to http …
+
+The spell checking is implemented as OpenOffice/LibreOffice extension. So far so good. The problem is that this extension is only compatible with LibreOffice < 4 and if that was not enough it only works on i386 platforms. Thats why this Docker image has been created to easily use this old but still useful software.
 
 ## How it works
 
@@ -45,13 +48,13 @@ make install
 
 You might need to change the owner of the bind mounted directory `mount_volume_user_home` from your host system to match your user. Note that the UID must match with the user inside which is 1000.
 
-The Makefile expects that you saved the extension extracted from zip file under `~/Downloads/Software/` which is mounted in the container as `~/duden_setup_files`.
+The Makefile expects that you saved the extension extracted from the zip file under `~/Downloads/Software/` which is mounted in the container as `~/duden_setup_files`.
 
 ```Shell
 ## In the container
 unopkg add duden_setup_files/die-duden-rechtschreibpruefung.oxt
 ## You only get a: ERROR: You need write permissions to install this extension!
-## Does not work with the first try (as said, this software is old …)
+## Does not work with on first try (as said, this software is old …)
 unopkg add duden_setup_files/die-duden-rechtschreibpruefung.oxt
 unopkg list
 ```
@@ -73,6 +76,8 @@ For that just exit out of the container and execute:
 ```Shell
 make run
 ```
+
+For subsequent starts you can just type `make` which defaults to `make start`. This will start the container created by `make run`.
 
 ## License
 
