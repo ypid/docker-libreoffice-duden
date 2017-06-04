@@ -82,4 +82,5 @@ For subsequent starts you can just type `make` which defaults to `make start`. T
 ## License
 
 This project is distributed under [GNU Affero General Public License, Version 3][AGPLv3].
+
 [AGPLv3]: https://github.com/jchaney/owncloud/blob/master/LICENSE
